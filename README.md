@@ -1,6 +1,6 @@
 # You-sure-can-attract-a-crowd-
 
-![Crowd](crowd.jpg)
+![Crowd](Images/crowd.jpg)
 
 # Background
 Your company has decided to crowdsale their PupperCoin token in order to help fund the network development.
