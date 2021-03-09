@@ -12,12 +12,18 @@ contract PupperCoinSale is Crowdsale, MintedCrowdsale, CappedCrowdsale, TimedCro
     
     constructor(
         // @TODO: Fill in the constructor parameters!
+        PupperCoin Coin , 
         uint rate, 
-        address payable wallet, 
-        PupperCoin token
+        address payable wallet,
+        uint goal,  //goal for crowdsale
+        uint starttime,
+        uint endtime // uint time Cap
     )
         // @TODO: Pass the constructor parameters to the crowdsale contracts.
-        Crowdsale(rate,wallet,token)
+        Crowdsale(rate,wallet,Coin)
+        TimedCrowdsale(starttime,endtime)
+        CappedCrowdsale(goal)
+        RefundableCrowdsale(goal)
         public
     {
         // constructor can stay empty
@@ -26,30 +32,30 @@ contract PupperCoinSale is Crowdsale, MintedCrowdsale, CappedCrowdsale, TimedCro
 
 contract PupperCoinSaleDeployer {
 
-    address public token_sale_address;
-    address public token_address;
+    address public Coin_sale_address;
+    address public Coin_address;
 
     uint unlock_time;
 
     constructor(
         // @TODO: Fill in the constructor parameters!
+        address payable wallet,
         string memory name,
         string memory symbol,
-        address payable wallet
+        uint initial_supply
     )
         public
     {
         // @TODO: create the PupperCoin and keep its address handy
-        PupperCoin token = new PupperCoin(name, symbol, 0);
-        token_address = address(token);
+        PupperCoin Coin = new PupperCoin(name, symbol, 0);
+        Coin_address = address(Coin);
 
         // @TODO: create the PupperCoinSale and tell it about the token, set the goal, and set the open and close times to now and now + 24 weeks.
-        PupperCoinTokenSale PupperCoin_sale = new PupperCoinTokenSale(1,wallet, token);
-        token_sale_address = address(PupperCoin_sale);
-        unlock_time = now + 24 weeks;
+        PupperCoinSale Coin_sale = new PupperCoinSale(Coin, 1, wallet, initial_supply, now, now + 24 weeks);
+        Coin_sale_address = address(Coin_sale);
         
         // make the PupperCoinSale contract a minter, then have the PupperCoinSaleDeployer renounce its minter role
-        token.addMinter(token_sale_address);
-        token.renounceMinter();
+        Coin.addMinter(Coin_sale_address);
+        Coin.renounceMinter();
     }
 }
