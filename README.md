@@ -25,9 +25,15 @@ You will conduct the crowdsale on the Kovan or Ropsten testnet in order to get a
 
     2.1. ERC20 PupperCoin;
 
+    ![Coin](Images/PupperCoin.png)
+
     2.2. PupperCoinCrowdsale;
 
+    ![Sale](Images/PupperCoinSale.png)
+
     2.3. PupperCoinCrowdsaleDeployer;
+
+    ![Deployer](Images/PupperCoinSaleDeployer.png)
 
 3. Testing the Crowdsale:
 
